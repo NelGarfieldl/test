@@ -92,5 +92,8 @@ function TDS:SkipWave()
     end
 end
 
+print("[DEBUG] TDS initialized:", TDS)
+print("[DEBUG] TDS.Events:", TDS.Events)
+
 -- Вернем объект TDS, чтобы все методы были доступны
 return TDS
