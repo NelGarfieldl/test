@@ -1,3 +1,4 @@
+Log("Script has started!")
 local TDS = {}
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
