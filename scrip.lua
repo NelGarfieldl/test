@@ -3,15 +3,17 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
+-- События, которые будут использоваться для взаимодействия с сервером
 TDS.Events = {
-    PlaceTower = ReplicatedStorage:FindFirstChild("PlaceTower"),
-    UpgradeTower = ReplicatedStorage:FindFirstChild("UpgradeTower"),
-    SellTower = ReplicatedStorage:FindFirstChild("SellTower"),
-    SkipWave = ReplicatedStorage:FindFirstChild("SkipWave"),
-    SelectMap = ReplicatedStorage:FindFirstChild("SelectMap"),
-    Loadout = ReplicatedStorage:FindFirstChild("SelectLoadout")
+    PlaceTower = ReplicatedStorage:WaitForChild("PlaceTower"),
+    UpgradeTower = ReplicatedStorage:WaitForChild("UpgradeTower"),
+    SellTower = ReplicatedStorage:WaitForChild("SellTower"),
+    SkipWave = ReplicatedStorage:WaitForChild("SkipWave"),
+    SelectMap = ReplicatedStorage:WaitForChild("SelectMap"),
+    Loadout = ReplicatedStorage:WaitForChild("SelectLoadout")
 }
 
+-- Создаем интерфейс для отображения логов
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game.CoreGui
 
@@ -33,6 +35,7 @@ ConsoleTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 ConsoleTextBox.Text = "Console Log:\n"
 ConsoleTextBox.Parent = ConsoleFrame
 
+-- Функция для логирования сообщений
 local function Log(msg)
     print("[TDS] " .. msg)
     if ConsoleTextBox then
@@ -40,6 +43,7 @@ local function Log(msg)
     end
 end
 
+-- Функция для выбора карты
 function TDS:Map(mapName, isHardcore, mode)
     if self.Events.SelectMap then
         Log("Selecting map: " .. mapName .. " | Hardcore: " .. tostring(isHardcore) .. " | Mode: " .. mode)
@@ -47,6 +51,7 @@ function TDS:Map(mapName, isHardcore, mode)
     end
 end
 
+-- Функция для загрузки комплекта башен
 function TDS:Loadout(towers)
     if self.Events.Loadout then
         Log("Loading towers: " .. table.concat(towers, ", "))
@@ -54,6 +59,7 @@ function TDS:Loadout(towers)
     end
 end
 
+-- Функция для размещения башни
 function TDS:Place(towerName, x, y, z)
     if self.Events.PlaceTower then
         Log("Placing tower: " .. towerName .. " at X: " .. x .. ", Y: " .. y .. ", Z: " .. z)
@@ -61,6 +67,7 @@ function TDS:Place(towerName, x, y, z)
     end
 end
 
+-- Функция для улучшения башни
 function TDS:Upgrade(towerId)
     if self.Events.UpgradeTower then
         Log("Upgrading tower ID: " .. towerId)
@@ -68,6 +75,7 @@ function TDS:Upgrade(towerId)
     end
 end
 
+-- Функция для продажи башни
 function TDS:Sell(towerId)
     if self.Events.SellTower then
         Log("Selling tower ID: " .. towerId)
@@ -75,6 +83,7 @@ function TDS:Sell(towerId)
     end
 end
 
+-- Функция для пропуска волны
 function TDS:SkipWave()
     if self.Events.SkipWave then
         Log("Skipping wave")
@@ -82,4 +91,5 @@ function TDS:SkipWave()
     end
 end
 
+-- Вернем объект TDS, чтобы все методы были доступны
 return TDS
